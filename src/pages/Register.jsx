@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Logo from "../assets/logo.svg";
-import { ToastContainer, toast } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { registerRoute } from "../utils/APIRoutes";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -65,7 +64,7 @@ export default function Register() {
     event.preventDefault();
     if (handleValidation()) {
       const { email, username, password } = values;
-      const { data } = await axios.post(registerRoute, {
+      const { data } = await axios.post('https://messanger-server.herokuapp.com/api/auth/register', {
         username,
         email,
         password,
