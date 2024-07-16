@@ -60,30 +60,37 @@ export default function Register() {
     return true;
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (handleValidation()) {
-      const { email, username, password } = values;
-      const { data } = await axios.post('https://messanger-server.herokuapp.com/api/auth/register', {
-        username,
-        email,
-        password,
-      });
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (handleValidation()) {
+            const { email, username, password } = values;
+            try {
+                const { data } = await axios.post(
+                    `${process.env.REACT_APP_API_URL}/api/auth/register`,
+                    {
+                        username,
+                        email,
+                        password,
+                    }
+                );
 
-      if (data.status === false) {
-        toast.error(data.msg, toastOptions);
-      }
-      if (data.status === true) {
-        localStorage.setItem(
-          process.env.REACT_APP_LOCALHOST_KEY,
-          JSON.stringify(data.user)
-        );
-        navigate("/");
-      }
-    }
-  };
+                if (data.status === false) {
+                    toast.error(data.msg, toastOptions);
+                }
+                if (data.status === true) {
+                    localStorage.setItem(
+                        process.env.REACT_APP_LOCALHOST_KEY,
+                        JSON.stringify(data.user)
+                    );
+                    navigate("/");
+                }
+            } catch (error) {
+                toast.error("Network error or server is not available", toastOptions);
+            }
+        }
+    };
 
-  return (
+    return (
     <>
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
