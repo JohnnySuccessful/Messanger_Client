@@ -67,11 +67,9 @@ export default function Register() {
             try {
                 const { data } = await axios.post(
                     `${process.env.REACT_APP_API_URL}/api/auth/register`,
-                    {
                         username,
                         email,
                         password,
-                    }
                 );
 
                 if (data.status === false) {
